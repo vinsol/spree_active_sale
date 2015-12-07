@@ -3,26 +3,23 @@
 # There can be many events/ schedules for one sale.
 #
 module Spree
-  class ActiveSaleEvent < ActiveRecord::Base
-    has_many :sale_images, :as => :viewable, :dependent => :destroy, :order => 'position ASC'
-    has_many :sale_products, :dependent => :destroy, :order => "#{Spree::SaleProduct.table_name}.position ASC"
-    has_many :products, :through => :sale_products, :order => "#{Spree::SaleProduct.table_name}.position ASC"
-    has_many :sale_taxons, :dependent => :destroy, :order => "#{Spree::SaleTaxon.table_name}.position ASC"
-    has_many :taxons, :through => :sale_taxons, :order => "#{Spree::SaleTaxon.table_name}.position ASC"
+  class ActiveSaleEvent < Spree::Base
+    has_many :sale_images, -> { order(position: :asc) }, :as => :viewable, :dependent => :destroy
+    has_many :sale_products, -> { order(position: :asc) }, :dependent => :destroy
+    has_many :products, :through => :sale_products
+    has_many :sale_taxons, -> { order(position: :asc) }, :dependent => :destroy
+    has_many :taxons,  -> { order(position: :asc) }, :through => :sale_taxons
     has_many :sale_properties, :dependent => :destroy
     has_many :properties, :through => :sale_properties
-
+    acts_as_paranoid
     belongs_to :active_sale
-
-    attr_accessible :description, :end_date, :is_active, :is_hidden, :is_permanent, :name, :active_sale_id, :start_date, :discount, :taxon_ids, :shipping_category_id, :single_product_sale
-
     validates :name, :start_date, :end_date, :active_sale_id, :presence => true
 
     validate  :validate_start_and_end_date
     validate  :validate_with_live_event
 
     class << self
-      # Spree::ActiveSaleEvent.is_live? method 
+      # Spree::ActiveSaleEvent.is_live? method
       # should only/ always represents live and active events and not just live events.
       def is_live? object
         object_class_name = object.class.name

@@ -1,16 +1,12 @@
 module Spree
-  class SaleProperty < ActiveRecord::Base
+  class SaleProperty < Spree::Base
     belongs_to :active_sale_event
     belongs_to :property
 
     validates :property, :presence => true
     validates :value, :length => { :maximum => 255 }
+    acts_as_list
 
-    attr_accessible :property_name, :value, :position
-
-    default_scope :order => "#{self.table_name}.position"
-
-    # virtual attributes for use with AJAX completion stuff
     def property_name
       property.name if property
     end

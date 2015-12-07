@@ -49,13 +49,11 @@ module Spree
           return @collection if @collection.present?
           params[:q] ||= {}
           params[:q][:deleted_at_null] ||= "1"
-          
-          params[:q][:s] ||= "name asc"
 
           @search = super.ransack(params[:q])
 
           @search = Spree::ActiveSale.includes(:active_sale_events).ransack(params[:q])
-          @collection = @search.result.page(params[:page]).per(Spree::ActiveSaleConfig[:admin_active_sales_per_page])
+          @collection = @search.result.page(params[:page]).per(Spree::ActiveSaleConfig[:admin_active_sales_per_page]).order(position: :asc)
         end
     end
   end

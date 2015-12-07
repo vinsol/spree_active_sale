@@ -3,7 +3,7 @@ module Spree
     HTTP_REFERER_REGEXP = /^https?:\/\/[^\/]+\/t\/([a-z0-9\-\/]+)$/ unless defined? HTTP_REFERER_REGEXP
 
     def show
-      @product = Spree::Product.active.find_by_permalink!(params[:id])
+      @product = Spree::Product.active.find_by_slug(params[:id])
       return unless @product
 
       if @product.live?

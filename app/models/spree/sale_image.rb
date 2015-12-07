@@ -1,9 +1,5 @@
 module Spree
   class SaleImage < Asset
-    validates_attachment_presence :attachment
-    validate :no_attachment_errors
-
-    attr_accessible :alt, :attachment, :position, :viewable_type, :viewable_id
 
     has_attached_file :attachment,
                       :styles => { :mini => '48x48>', :small => '100x100>', :sale => '240x240>', :large => '600x600>' },
@@ -13,10 +9,10 @@ module Spree
                       :convert_options => { :all => '-strip' }
     # save the w,h of the original image (from which others can be calculated)
     # we need to look at the write-queue for images which have not been saved yet
+    validates_attachment_content_type :attachment, content_type: /\Aimage\/.*\Z/
+    validates_attachment_presence :attachment
+    validate :no_attachment_errors
     after_post_process :find_dimensions
-
-    include Spree::Core::S3Support
-    supports_s3 :attachment
 
     #used by admin sales autocomplete
     def mini_url

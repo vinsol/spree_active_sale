@@ -5,7 +5,7 @@ module Spree
 
     validates :property, :presence => true
     validates :value, :length => { :maximum => 255 }
-    acts_as_list
+    default_scope { order(:position) }
 
     def property_name
       property.name if property

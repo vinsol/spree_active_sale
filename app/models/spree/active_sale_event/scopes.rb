@@ -1,4 +1,3 @@
-# FIXME
 module Spree
   class ActiveSaleEvent < Spree::Base
     cattr_accessor :search_scopes do

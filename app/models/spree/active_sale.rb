@@ -4,18 +4,15 @@
 #
 module Spree
   class ActiveSale < Spree::Base
+    extend FriendlyId
     has_many :active_sale_events, -> { where(:deleted_at => nil) }, :dependent => :destroy
 
-    acts_as_paranoid
     acts_as_list
 
     validates :name, :permalink, :presence => true
+    friendly_id :name, use: :slugged, slug_column: :permalink
     validates :permalink, uniqueness: { allow_blank: true }
     default_scope { order(position: :asc) }
-
-    before_validation if: :name do
-      self.permalink = "#{name}"
-    end
 
     accepts_nested_attributes_for :active_sale_events, :allow_destroy => true, :reject_if => lambda { |attrs| attrs.all? { |k, v| v.blank? } }
 

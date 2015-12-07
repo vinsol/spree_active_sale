@@ -9,6 +9,29 @@ module Spree
       search_scopes << name.to_sym
     end
 
+    def self.simple_scopes
+      [
+        :ascend_by_start_date,
+        :descend_by_start_date,
+        :ascend_by_end_date,
+        :descend_by_end_date,
+        :ascend_by_updated_at,
+        :descend_by_updated_at,
+        :ascend_by_name,
+        :descend_by_name
+      ]
+    end
+
+    def self.add_simple_scopes(scopes)
+      scopes.each do |name|
+        parts = name.to_s.match(/(.*)_by_(.*)/)
+        order_text = "#{quoted_table_name}.#{parts[2]} #{parts[1] == 'ascend' ?  "ASC" : "DESC"}"
+        self.scope name.to_s, -> { order(order_text) }
+      end
+    end
+
+    add_simple_scopes simple_scopes
+
     add_search_scope :start_date_between do |from, to|
       where(ActiveSaleEvent.table_name => { :start_date => from..to })
     end

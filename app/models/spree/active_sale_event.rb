@@ -11,7 +11,6 @@ module Spree
     has_many :taxons,  -> { order(position: :asc) }, :through => :sale_taxons
     has_many :sale_properties, :dependent => :destroy
     has_many :properties, :through => :sale_properties
-    acts_as_paranoid
     belongs_to :active_sale
     validates :name, :start_date, :end_date, :active_sale_id, :presence => true
 

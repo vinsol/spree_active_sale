@@ -14,6 +14,8 @@ module Spree
     validates :permalink, uniqueness: { allow_blank: true }
     default_scope { order(position: :asc) }
 
+    self.whitelisted_ransackable_attributes = ['deleted_at']
+
     accepts_nested_attributes_for :active_sale_events, :allow_destroy => true, :reject_if => lambda { |attrs| attrs.all? { |k, v| v.blank? } }
 
     def self.config(&block)

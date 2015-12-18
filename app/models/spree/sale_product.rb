@@ -1,7 +1,7 @@
 module Spree
   class SaleProduct < Spree::Base
     belongs_to :active_sale_event, :class_name => 'Spree::ActiveSaleEvent'
-    belongs_to :product, -> { unscope(where: :deleted_at) }, class_name: 'Spree::Product'
+    belongs_to :product, class_name: 'Spree::Product'
 
     delegate :product_name, :to => :product
     delegate :sale_name, :to => :active_sale_event
@@ -16,5 +16,10 @@ module Spree
     def product_name=(name)
       self.product.name ||= name if name.present?
     end
+
+    def product
+      Spree::Product.unscoped { super }
+    end
+
   end
 end

@@ -20,6 +20,7 @@ module Spree
 
       referer = request.env['HTTP_REFERER']
       if referer
+        @taxonomies = Spree::Taxonomy.includes(root: :children)
         begin
           referer_path = URI.parse(request.env['HTTP_REFERER']).path
         rescue URI::InvalidURIError

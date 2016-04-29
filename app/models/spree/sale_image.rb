@@ -41,9 +41,5 @@ module Spree
         false
       end
     end
-
-    def viewable_type=(event_type)
-      super event_type.to_s.classify.constantize.base_class.to_s
-    end
   end
 end

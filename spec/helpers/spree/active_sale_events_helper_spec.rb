@@ -10,6 +10,6 @@ require 'spec_helper'
 #     end
 #   end
 # end
-describe Spree::ActiveSaleEventsHelper do
+describe Spree::ActiveSaleEventsHelper, type: :controller do
   pending "add some examples to (or delete) #{__FILE__}"
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::HomeController do
+describe Spree::HomeController, type: :controller do
   let(:user) { mock_model Spree::User, :last_incomplete_spree_order => nil, :spree_api_key => 'fake' }
   let(:sale) { create(:active_sale_with_events, :events_count => 2) }
 

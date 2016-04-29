@@ -1,7 +1,7 @@
 # coding: UTF-8
 require 'spec_helper'
 
-describe Spree::CheckoutController do
+describe Spree::CheckoutController, type: :controller do
   let(:token) { 'some_token' }
   let(:user) { stub_model(Spree::LegacyUser) }
   let(:order) { order = FactoryGirl.create(:order_with_totals) }
@@ -10,7 +10,7 @@ describe Spree::CheckoutController do
     controller.stub :try_spree_current_user => user
     controller.stub :current_order => order
   end
-  
+
   let(:active_sale_event_with_products) { FactoryGirl.create(:active_sale_event_with_products) }
 
   context "#edit" do

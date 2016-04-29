@@ -1,7 +1,7 @@
 # coding: UTF-8
 require 'spec_helper'
 
-describe Spree::ProductsController do
+describe Spree::ProductsController, type: :controller do
   let!(:user) { mock_model(Spree::User, :spree_api_key => 'fake', :last_incomplete_spree_order => nil) }
 
   let(:active_sale_event) { create(:active_sale_event_for_product) }

@@ -9,14 +9,13 @@ module Spree
       destroy.before :destroy_before
 
       private
-
         def location_after_save
-          edit_admin_active_sale_active_sale_event_url(@active_sale_event.active_sale, @active_sale_event)
+          admin_active_sale_active_sale_event_sale_images_url(@active_sale_event.active_sale, @active_sale_event)
         end
 
         def load_data
-          @active_sale = Spree::ActiveSale.find(params[:active_sale_id])
-          @active_sale_event = Spree::ActiveSaleEvent.find(params[:active_sale_event_id])
+          @active_sale ||= Spree::ActiveSale.find_by_permalink!(params[:active_sale_id])
+          @active_sale_event ||= Spree::ActiveSaleEvent.find(params[:active_sale_event_id])
         end
 
         def set_viewable

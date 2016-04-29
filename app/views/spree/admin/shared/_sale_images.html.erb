@@ -1,8 +1,8 @@
 <div id="images" data-hook></div>
 
-<% unless @active_sale_event.sale_images.any? %>
+<% unless @sale_images.any? %>
   <div class="no-objects-found">
-    <%= t('spree.active_sale.event.no_image') %>
+    <%= Spree.t('active_sale.event.no_image') %>
   </div>
 <% else %>
   <table class="index sortable" data-hook="images_table" data-sortable-link="<%= update_positions_admin_active_sale_active_sale_event_sale_images_url(@active_sale, @active_sale_event) %>">
@@ -21,7 +21,7 @@
     </thead>
 
     <tbody>
-      <% (@active_sale_event.sale_images).each do |image| %>
+      <% @sale_images.each do |image| %>
         <tr id="<%= spree_dom_id image %>" data-hook="images_row" class="<%= cycle('odd', 'even')%>">
           <td class="no-border">
             <span class="handle"></span>

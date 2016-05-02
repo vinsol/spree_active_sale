@@ -9,8 +9,8 @@ module SpreeActiveSale
       end
 
       def add_stylesheets
-        inject_into_file 'vendor/assets/stylesheets/spree/frontend/all.css', " *= require store/spree_active_sale\n", :before => /\*\//, :verbose => true
-        inject_into_file 'vendor/assets/stylesheets/spree/backend/all.css', " *= require admin/spree_active_sale\n", :before => /\*\//, :verbose => true
+        inject_into_file 'vendor/assets/stylesheets/spree/frontend/all.css', " *= require store/spree_active_sale\n", before: /\*\//, verbose: true
+        inject_into_file 'vendor/assets/stylesheets/spree/backend/all.css', " *= require admin/spree_active_sale\n", before: /\*\//, verbose: true
       end
 
       def add_migrations

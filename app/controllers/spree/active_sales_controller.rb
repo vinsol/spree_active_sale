@@ -1,7 +1,8 @@
 module Spree
   class ActiveSalesController < Spree::StoreController
-    before_filter :load_sale, :except => :index
-    rescue_from ActiveRecord::RecordNotFound, :with => :render_404
+    before_action :load_sale, except: :index
+    before_action :load_taxonomies, only: :show
+    rescue_from ActiveRecord::RecordNotFound, with: :render_404
     helper 'spree/taxons'
     helper 'spree/products'
 
@@ -20,7 +21,6 @@ module Spree
 
       referer = request.env['HTTP_REFERER']
       if referer
-        @taxonomies = Spree::Taxonomy.includes(root: :children)
         begin
           referer_path = URI.parse(request.env['HTTP_REFERER']).path
         rescue URI::InvalidURIError
@@ -48,6 +48,10 @@ module Spree
         else
           @sale_properties, @products = [], []
         end
+      end
+
+      def load_taxonomies
+        @taxonomies = Spree::Taxonomy.includes(root: :children)
       end
   end
 end

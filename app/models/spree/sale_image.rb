@@ -9,8 +9,9 @@ module Spree
                       :convert_options => { :all => '-strip' }
     # save the w,h of the original image (from which others can be calculated)
     # we need to look at the write-queue for images which have not been saved yet
-    validates_attachment_content_type :attachment, content_type: /\Aimage\/.*\Z/
-    validates_attachment_presence :attachment
+    validates_attachment :attachment, presence: true,
+      content_type: { content_type: /\Aimage\/.*\Z/ }
+
     validate :no_attachment_errors
     after_post_process :find_dimensions
 

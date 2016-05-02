@@ -8,14 +8,14 @@
 <% else %>
   <div id="products" class="inline product-listing" data-hook>
     <% sale_events.each do |sale_event| %>
-      <div id="active_sale_<%= sale_event.id %>" class="columns three <%= cycle("alpha", "secondary", "", "omega secondary", :name => "classes") %> col-md-3 col-sm-6 product-list-item" data-hook="active_sales_list_item" itemscope itemtype="http://schema.org/Offer">
+      <div id="active_sale_<%= sale_event.id %>" class="columns three <%= cycle("alpha", "secondary", "", "omega secondary", name: "classes") %> col-md-3 col-sm-6 product-list-item" data-hook="active_sales_list_item" itemscope itemtype="http://schema.org/Offer">
         <div class="panel panel-default relative panel-sales">
-          <%= link_to truncate(sale_event.name, :length => 50), sale_event.permalink, :class => 'info-overlay', :itemprop => "name" %>
+          <%= link_to truncate(sale_event.name, length: 50), sale_event.permalink, class: 'info-overlay', itemprop: "name" %>
           <div class="panel-heading text-center">
             <%= sale_event.name %>
           </div>
           <div class="panel-body text-center product-body">
-            <%= link_to small_event_image(sale_event, :itemprop => "image"), sale_event.permalink, :itemprop => 'url' %>
+            <%= link_to small_event_image(sale_event, itemprop: "image"), sale_event.permalink, itemprop: 'url' %>
           </div>
           <div class="panel-footer text-center">
             <%= sale_event_timer(sale_event) %>

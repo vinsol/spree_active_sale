@@ -1,9 +1,9 @@
 module Spree
   module Admin
     class ActiveSaleEventsController < ResourceController
-      belongs_to 'spree/active_sale', :find_by => :permalink
-      before_filter :load_active_sale, :only => [:index]
-      before_filter :load_data, :except => [:index]
+      belongs_to 'spree/active_sale', find_by: :permalink
+      before_action :load_active_sale, only: [:index]
+      before_action :load_data, except: [:index]
 
       def show
         session[:return_to] ||= request.referer

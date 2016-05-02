@@ -5,11 +5,11 @@
 module Spree
   class ActiveSaleEvent < Spree::Base
 
-    has_many :sale_images, -> { order_by_position }, as: :viewable, dependent: :destroy
-    has_many :sale_products, -> { order_by_position }, dependent: :destroy
+    has_many :sale_images, -> { order(:position) }, as: :viewable, dependent: :destroy
+    has_many :sale_products, -> { order(:position) }, dependent: :destroy
     has_many :products, through: :sale_products
-    has_many :sale_taxons, -> { order_by_position }, dependent: :destroy
-    has_many :taxons,  -> { order_by_position }, through: :sale_taxons
+    has_many :sale_taxons, -> { order(:position) }, dependent: :destroy
+    has_many :taxons,  -> { order(:position) }, through: :sale_taxons
     has_many :sale_properties, dependent: :destroy
     has_many :properties, through: :sale_properties
     belongs_to :active_sale
@@ -17,8 +17,6 @@ module Spree
     validates :name, :start_date, :end_date, :active_sale_id, presence: true
     validate  :validate_start_and_end_date
     validate  :validate_with_live_event
-
-    scope :order_by_position, -> { order(:position) }
 
     class << self
       # Spree::ActiveSaleEvent.is_live? method

@@ -39,7 +39,7 @@ en:
           close_text: 'Close'
         details: "Sale event details"
         ending_message: "SALE CLOSES IN"
-        discount_hint: "Integer number with the mean or max discount percentage (i.e. '30' to express a 30%)."
+        discount_hint: "Decimal number with the mean or max discount percentage (i.e. '30' to express a 30%)."
         flash:
           error: "The page you are looking for is no longer available."
         images:

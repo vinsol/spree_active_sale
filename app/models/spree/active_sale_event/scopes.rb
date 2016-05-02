@@ -1,5 +1,5 @@
 module Spree
-  class ActiveSaleEvent < ActiveRecord::Base
+  class ActiveSaleEvent < Spree::Base
     cattr_accessor :search_scopes do
       []
     end
@@ -26,7 +26,7 @@ module Spree
       scopes.each do |name|
         parts = name.to_s.match(/(.*)_by_(.*)/)
         order_text = "#{quoted_table_name}.#{parts[2]} #{parts[1] == 'ascend' ?  "ASC" : "DESC"}"
-        self.scope(name.to_s, relation.order(order_text))
+        self.scope name.to_s, -> { order(order_text) }
       end
     end
 
@@ -63,7 +63,7 @@ module Spree
     # If you need sales only within one taxon use
     #
     #   Spree::ActiveSaleEvent.taxons_id_eq(x)
-    # 
+    #
     # If you're using count on the result of this scope, you must use the
     # `:distinct` option as well:
     #
@@ -88,7 +88,7 @@ module Spree
     end
 
     add_search_scope :in_sale_taxon do |taxon|
-      joins([:active_sale_events => :taxons]).
+      joins(:taxons).
       where(Taxon.table_name => { :id => taxon.self_and_descendants.map(&:id) })
     end
 

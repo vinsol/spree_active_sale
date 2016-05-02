@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::HomeController do
+describe Spree::HomeController, type: :controller do
   let(:active_sale_event) { FactoryGirl.create(:active_sale_event) }
 
   describe 'Get #index method' do

@@ -30,7 +30,6 @@ module Spree
           base_scope = sale_scope.active_products
         end
         base_scope = get_products_conditions_for(base_scope, keywords)
-        base_scope = base_scope.on_hand unless Spree::Config[:show_zero_stock_products]
         base_scope = add_search_scopes(base_scope)
         base_scope
       end
@@ -40,7 +39,7 @@ module Spree
         sale_scope = sale_scope.in_taxon(taxon) unless taxon.blank?
         sale_scope = get_sales_conditions_for(sale_scope, keywords) unless keywords.blank?
         sale_scope = add_sale_search_scopes(sale_scope)
-        sale_scope = sale_scope.send(sort_by) unless sort_by.blank?        
+        sale_scope = sale_scope.send(sort_by) unless sort_by.blank?
         sale_scope
       end
 

@@ -2,8 +2,10 @@ module Spree
   ProductsController.class_eval do
     HTTP_REFERER_REGEXP = /^https?:\/\/[^\/]+\/t\/([a-z0-9\-\/]+)$/ unless defined? HTTP_REFERER_REGEXP
 
+    before_action :load_taxonomies, only: :show
+
     def show
-      @product = Spree::Product.active.find_by_permalink!(params[:id])
+      @product = Spree::Product.active.find_by(slug: params[:id])
       return unless @product
 
       if @product.live?
@@ -21,5 +23,10 @@ module Spree
         redirect_to root_url, :error => t('spree.active_sale.event.flash.error')
       end
     end
+
+    private
+      def load_taxonomies
+        @taxonomies = Spree::Taxonomy.includes(root: :children)
+      end
   end
 end

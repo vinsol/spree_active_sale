@@ -15,4 +15,5 @@ Spree::Product.class_eval do
   def live?
     !self.active_sale_events_available.blank? || !self.find_live_taxons.blank?
   end
+
 end

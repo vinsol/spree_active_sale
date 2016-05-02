@@ -19,6 +19,7 @@ Spree::Core::Engine.routes.draw do
   end
 
   resources :active_sales, :path => :sales, :only => [:index, :show]
-  get '/:view_type/t/*id', :to => 'taxons#show', :as => :nested_taxons
-  get '/sales/t/*id', :to => 'taxons#show', :as => :sales_by_taxon
+
+  get '/:view_type/t/*id', to: 'taxons#show', as: :active_sale_nested_taxons
+  get '/sales/t/*id', to: 'taxons#show', as: :sales_by_taxon
 end

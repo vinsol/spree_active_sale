@@ -1,6 +1,6 @@
 module Spree
   module ActiveSaleEventsHelper
-    
+
     def sale_event_timer(event = nil, layout = nil)
       return I18n.t('spree.active_sale.event.can_not_be_nil') if event.nil? || !(event.kind_of? Spree::ActiveSaleEvent)
       layout ||= '{dn} DAYS {hnn}{sep}{mnn}{sep}{snn}'

@@ -3,19 +3,22 @@
 # For example: 'My Sale/Product name' sale, which can have many schedules in it.
 #
 module Spree
-  class ActiveSale < ActiveRecord::Base
-    has_many :active_sale_events, :conditions => { :deleted_at => nil }, :dependent => :destroy
+  class ActiveSale < Spree::Base
+    extend FriendlyId
 
-    attr_accessible :name, :permalink
+    acts_as_list
+    friendly_id :name, use: :slugged, slug_column: :permalink
 
-    validates :name, :permalink, :presence => true
-    validates :permalink, :uniqueness => true
+    has_many :active_sale_events, -> { where(deleted_at: nil) }, dependent: :destroy
 
-    default_scope :order => "#{self.table_name}.position"
+    validates :name, :permalink, presence: true
+    validates :permalink, uniqueness: { allow_blank: true }
 
-    make_permalink :order => :name
+    default_scope { order(position: :asc) }
 
-    accepts_nested_attributes_for :active_sale_events, :allow_destroy => true, :reject_if => lambda { |attrs| attrs.all? { |k, v| v.blank? } }
+    self.whitelisted_ransackable_attributes = ['deleted_at']
+
+    accepts_nested_attributes_for :active_sale_events, allow_destroy: true, reject_if: lambda { |attrs| attrs.all? { |k, v| v.blank? } }
 
     def self.config(&block)
       yield(Spree::ActiveSaleConfig)
@@ -25,7 +28,7 @@ module Spree
     # instead of actually deleting the sale.
     def delete
       self.update_column(:deleted_at, Time.zone.now)
-      active_sale_events.update_all(:deleted_at => Time.zone.now)
+      active_sale_events.update_all(deleted_at: Time.zone.now)
     end
 
     def to_param

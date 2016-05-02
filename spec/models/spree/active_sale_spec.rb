@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Spree::ActiveSale" do
+describe "Spree::ActiveSale", type: :controller do
   it "should not save active sale when name is not given" do
     active_sale = Spree::ActiveSale.new
     active_sale.name = " "

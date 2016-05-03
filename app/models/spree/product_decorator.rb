@@ -5,6 +5,7 @@ Spree::Product.class_eval do
   delegate :available, :to => :active_sale_events, :prefix => true
   delegate :live_active, :to => :active_sale_events, :prefix => true
   delegate :live_active_and_hidden, :to => :active_sale_events, :prefix => true
+  delegate_belongs_to :master, :display_discount_price, :discount_price_if_sale_live
 
   # Find live and active taxons for a product.
   def find_live_taxons

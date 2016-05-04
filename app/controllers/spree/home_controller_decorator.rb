@@ -7,6 +7,7 @@ module Spree
       @searcher.current_user = try_spree_current_user
       @searcher.current_currency = current_currency
       @sale_events = @searcher.retrieve_sales
+      @taxonomies = Spree::Taxonomy.includes(root: :children)
       respond_with(@sale_events)
     end
   end

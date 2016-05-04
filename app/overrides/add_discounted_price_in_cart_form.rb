@@ -4,7 +4,7 @@ Deface::Override.new(
   replace: 'div#product-price div',
   text: '<div>
           <strike><span class="price selling" itemprop="price">
-            <%= display_price(@product) %>
+            <%= display_price(@product) if @product.on_discount? %>
           </span></strike>
 
           <span class="lead price selling" itemprop="price">

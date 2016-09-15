@@ -1,12 +1,10 @@
 <% content_for :page_title do %>
-  <%= @active_sale.name %> &#62; <%= Spree.t('active_sale.event.title.list') %>
+  <%= @active_sale.name %>/<%= Spree.t(:list, scope: [:active_sale, :event, :title]) %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t('active_sale.link.edit'), [:edit, :admin, @active_sale], :icon => 'icon-arrow-left', :id => 'admin_active_sales_link' %>
-    <%= button_link_to Spree.t('active_sale.event.link.new'), [:new, :admin, @active_sale, :active_sale_event], :icon => 'icon-plus', :id => 'admin_new_active_sale_link' %>
-  </li>
+  <%= button_link_to Spree.t(:edit, scope: [:active_sale, :link]), [:edit, :admin, @active_sale], icon: 'arrow-left', id: 'admin_active_sales_link' %>
+  <%= button_link_to Spree.t(:new, scope: [:active_sale, :event, :link]), [:new, :admin, @active_sale, :active_sale_event], icon: 'plus', id: 'admin_new_active_sale_link' %>
 <% end %>
 
-<%= render :partial => 'spree/admin/shared/list_events', :locals => { :active_sale => @active_sale, :active_sale_events => @active_sale_events } %>
+<%= render partial: 'spree/admin/shared/list_events', locals: { active_sale: @active_sale, active_sale_events: @active_sale_events } %>

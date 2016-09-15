@@ -1,19 +1,17 @@
 <% content_for :page_title do %>
-  <%= @active_sale.name %> &#62; <%= @active_sale_event.name %> &#62; <%= Spree.t('active_sale.event.images.title.list') %>
+  <%= @active_sale.name %>/<%= @active_sale_event.name %>/<%= Spree.t(:list, scope: [:active_sale, :event, :images, :title]) %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t('active_sale.link.edit'), [:edit, :admin, @active_sale], :icon => 'icon-edit', :id => 'edit_admin_active_sales_link' %>
+  <%= button_link_to Spree.t(:edit, scope: [:active_sale, :link]), [:edit, :admin, @active_sale], icon: 'edit', id: 'edit_admin_active_sales_link' %>
 
-    <%= button_link_to Spree.t('active_sale.event.link.edit'), [:edit, :admin, @active_sale, @active_sale_event], :icon => 'icon-arrow-left', :id => 'edit_admin_active_sale_events_link' %>
+  <%= button_link_to Spree.t(:edit, scope: [:active_sale, :event, :link]), [:edit, :admin, @active_sale, @active_sale_event], icon: 'arrow-left', id: 'edit_admin_active_sale_events_link' %>
 
-    <%= button_link_to Spree.t('active_sale.event.link.new'), [:new, :admin, @active_sale, :active_sale_event], :icon => 'icon-plus', :id => 'admin_new_active_sale_link' %>
+  <%= button_link_to Spree.t(:new, scope: [:active_sale, :event, :link]), [:new, :admin, @active_sale, :active_sale_event], icon: 'plus', id: 'admin_new_active_sale_link' %>
 
-    <%= button_link_to Spree.t('active_sale.event.images.link.new'), [:new, :admin, @active_sale, @active_sale_event, :sale_image], :icon => 'icon-plus', :id => 'admin_new_active_sale_image_link' %>
-  </li>
+  <%= button_link_to Spree.t(:new, scope: [:active_sale, :event, :images, :link]), [:new, :admin, @active_sale, @active_sale_event, :sale_image], icon: 'plus', id: 'admin_new_active_sale_image_link' %>
 <% end %>
 
-<%= render :partial => 'spree/admin/shared/sale_tabs', :locals => { :current => 'Sale Event Images' } %>
+<%= render partial: 'spree/admin/shared/sale_tabs', locals: { current: 'Sale Event Images' } %>
 
-<%= render :partial => 'spree/admin/shared/sale_images', :locals => { :sale_images => @sale_images } %>
+<%= render partial: 'spree/admin/shared/sale_images', locals: { sale_images: @sale_images } %>

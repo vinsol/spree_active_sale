@@ -1,4 +1,4 @@
 object false
-child(@products => :products) do 
+child(@products => :products) do
   attributes :name, :id
 end

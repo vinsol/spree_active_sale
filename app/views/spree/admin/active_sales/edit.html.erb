@@ -1,16 +1,14 @@
 <% content_for :page_title do %>
-  <%= Spree.t('active_sale.title.edit') %>&#62; &ldquo;<%= @active_sale.name %>&rdquo;
+  <%= Spree.t(:edit, scope: [:active_sale, :title]) %>/<%= @active_sale.name %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t('active_sale.link.back'), collection_url, :icon => 'icon-arrow-left', :id => 'admin_new_active_sale_link' %>
-    <%= button_link_to Spree.t('active_sale.event.link.new'), [:new, :admin, @active_sale, :active_sale_event], :icon => 'icon-plus', :id => 'admin_new_active_sale_link' %>
-  </li>
+  <%= button_link_to Spree.t(:back, scope: [:active_sale, :link]), collection_url, icon: 'arrow-left', id: 'admin_new_active_sale_link' %>
+  <%= button_link_to Spree.t(:new, scope: [:active_sale, :event, :link]), [:new, :admin, @active_sale, :active_sale_event], icon: 'plus', id: 'admin_new_active_sale_link' %>
 <% end %>
 
 <div data-hook="admin_active_sale_edit_form">
   <div id="active-sale-form-wrapper">
-    <%= render :partial => 'form' %>
+    <%= render partial: 'form' %>
   </div>
 </div>

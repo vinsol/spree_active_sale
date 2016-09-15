@@ -1,13 +1,11 @@
 <% content_for :page_title do %>
-  <%= @active_sale.name %> &#62; <%= Spree.t('active_sale.event.title.new') %>
+  <%= @active_sale.name %>/<%= Spree.t(:new, scope: [:active_sale, :event, :title]) %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <li>
-    <%= button_link_to Spree.t('active_sale.event.link.back'), [:edit, :admin, @active_sale], icon: 'icon-arrow-left', id: 'admin_active_sales_link' %>
-  </li>
+  <%= button_link_to Spree.t(:back, scope: [:active_sale, :event, :link]), [:edit, :admin, @active_sale], icon: 'arrow-left', id: 'admin_active_sales_link' %>
 <% end %>
 
 <div data-hook="admin_active_sale_event_edit_form">
-  <%= render partial: 'form'%>
+  <%= render partial: 'form' %>
 </div>

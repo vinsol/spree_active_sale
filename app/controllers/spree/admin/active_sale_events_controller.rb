@@ -7,7 +7,7 @@ module Spree
 
       def show
         session[:return_to] ||= request.referer
-        redirect_to( :action => :edit )
+        redirect_to(action: :edit)
       end
 
       def destroy
@@ -30,7 +30,6 @@ module Spree
       end
 
       private
-      
         def location_after_save
           edit_admin_active_sale_active_sale_event_url(@active_sale, @active_sale_event)
         end
@@ -41,12 +40,12 @@ module Spree
           return @collection if @collection.present?
           params[:q] ||= {}
           params[:q][:deleted_at_null] ||= "1"
-          
+
           params[:q][:s] ||= "name asc"
 
           @search = super.ransack(params[:q])
 
-          @search = Spree::ActiveSaleEvent.where(:active_sale_id => params[:active_sale_id]).ransack(params[:q])
+          @search = Spree::ActiveSaleEvent.where(active_sale_id: params[:active_sale_id]).ransack(params[:q])
           @collection = @search.result.page(params[:page]).per(Spree::ActiveSaleConfig[:admin_active_sale_events_per_page])
         end
 

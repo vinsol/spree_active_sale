@@ -24,18 +24,28 @@ Spree::Variant.class_eval do
 
   def discount_price_if_sale_live(currency = nil)
     amount = (currency ? price_in(currency).amount : price)
-    sale_event = product_active_sale_events_live_active.first
-    sale_event ? discount_price(sale_event) : amount
+    get_active_sale_event ? discount_price(get_active_sale_event) : amount
   end
 
   def display_discount_price
-    sale_event = product_active_sale_events_live_active.first || product.active_sale_events.last
-    Spree::Money.new(discount_price(sale_event)).to_s
+    Spree::Money.new(discount_price(get_sale_event))
+  end
+
+  def have_discount?
+    get_active_sale_event.try(:discount).to_f > 0
   end
 
   private
     def discount_price(sale_event)
       sale_event ? (price - ((price * sale_discount(sale_event.id).to_f) / 100)) : price
+    end
+
+    def get_sale_event
+      get_active_sale_event || product.active_sale_events.last
+    end
+
+    def get_active_sale_event
+      product_active_sale_events_live_active.first
     end
 
     def sale_discount(sale_id)

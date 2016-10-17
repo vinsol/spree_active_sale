@@ -27,8 +27,8 @@ module Spree
     # override the delete method to set deleted_at value
     # instead of actually deleting the sale.
     def delete
-      self.update_column(:deleted_at, Time.zone.now)
-      active_sale_events.update_all(deleted_at: Time.zone.now)
+      self.update_column(:deleted_at, Time.current)
+      active_sale_events.update_all(deleted_at: Time.current)
     end
 
     def to_param

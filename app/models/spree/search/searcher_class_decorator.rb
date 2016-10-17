@@ -24,10 +24,15 @@ module Spree
     protected
       def get_base_scope
         sale_scope = Spree::ActiveSaleEvent.available(sale_params)
-        unless taxon.blank?
-          base_scope = sale_scope.active_products_in_sale_taxon(taxon)
+        if sale_scope.present?
+          if taxon.blank?
+            base_scope = sale_scope.active_products
+          else
+            base_scope = sale_scope.active_products_in_sale_taxon(taxon)
+          end
         else
-          base_scope = sale_scope.active_products
+          base_scope = Spree::Product.spree_base_scopes.active
+          base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
         end
         base_scope = get_products_conditions_for(base_scope, keywords)
         base_scope = add_search_scopes(base_scope)
@@ -65,11 +70,11 @@ module Spree
       end
 
       def sale_params
-        { :start_date => @properties[:start_date], :endt_date => @properties[:endt_date], :active => @properties[:active], :hidden => @properties[:hidden] }
+        { start_date: @properties[:start_date], end_date: @properties[:end_date], active: @properties[:active], hidden: @properties[:hidden] }
       end
 
       def prepare(params)
-        @properties[:start_date] = @properties[:endt_date] = params[:current_time].blank? ? Time.zone.now : DateTime.parse(params[:current_time])
+        @properties[:start_date] = @properties[:end_date] = params[:current_time].blank? ? Time.zone.now : DateTime.parse(params[:current_time])
         @properties[:active] = params[:active].blank? ? true : (params[:active] == "true")
         @properties[:hidden] = params[:hidden].blank? ? false : (params[:hidden] == "true")
 

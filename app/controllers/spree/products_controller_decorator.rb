@@ -9,8 +9,8 @@ module Spree
       return unless @product
 
       if @product.live?
-        @variants = Spree::Variant.active.includes([:option_values, :images]).where(:product_id => @product.id)
-        @product_properties = Spree::ProductProperty.includes(:property).where(:product_id => @product.id)
+        @variants = Spree::Variant.active.includes([:option_values, :images]).where(product_id: @product.id)
+        @product_properties = Spree::ProductProperty.includes(:property).where(product_id: @product.id)
 
         referer = request.env['HTTP_REFERER']
 
@@ -20,7 +20,7 @@ module Spree
 
         respond_with(@product)
       else
-        redirect_to root_url, :error => t('spree.active_sale.event.flash.error')
+        redirect_to root_url, error: t('spree.active_sale.event.flash.error')
       end
     end
 
